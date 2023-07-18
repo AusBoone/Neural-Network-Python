@@ -10,7 +10,7 @@ To run this script, you will need the following Python libraries:
 - pandas: For data manipulation.
 
 You can install these libraries using pip:
-pip install tensorflow sklearn numpy pandas
+pip install -r requirements.txt
 
 # Setting Up
 The script assumes that you're working with a pandas DataFrame 'df' with a binary target column named 'target'. 
