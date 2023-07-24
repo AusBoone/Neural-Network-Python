@@ -1,9 +1,10 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import plot_model
+from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split, KFold
 from sklearn.preprocessing import StandardScaler
 import numpy as np
@@ -23,13 +24,16 @@ X_test_scaled = scaler.transform(X_test)
 # Define the model
 model = Sequential()
 model.add(Dense(64, input_dim=X_train_scaled.shape[1], activation='relu', kernel_regularizer=l2(0.01)))
+model.add(BatchNormalization())  # Add Batch Normalization layer
 model.add(Dropout(0.5))
 model.add(Dense(32, activation='relu', kernel_regularizer=l2(0.01)))
+model.add(BatchNormalization())  # Add Batch Normalization layer
 model.add(Dropout(0.5))
 model.add(Dense(1, activation='sigmoid'))
 
 # Compile the model
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+optimizer = Adam(learning_rate=0.001)  # Define optimizer with learning rate
+model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
 # Print the model summary
 print(model.summary())
