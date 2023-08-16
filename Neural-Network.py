@@ -39,16 +39,48 @@ def prepare_data(df, target_column, test_size=0.2, random_state=42):
 def create_model(input_dim):
     """
     Create a Sequential model and add layers to it.
+
+    Parameters:
+        input_dim (int): The size of the input layer, representing the number of features.
+
+    Returns:
+        model (Sequential): A Sequential model with the specified architecture.
+
+    The model consists of:
+        - An input layer with 64 neurons, ReLU activation, and L2 regularization.
+        - A Batch Normalization layer to normalize activations.
+        - A Dropout layer with a rate of 0.5 for regularization.
+        - A hidden layer with 32 neurons, ReLU activation, and L2 regularization.
+        - Another Batch Normalization layer.
+        - Another Dropout layer with a rate of 0.5.
+        - An output layer with 1 neuron and a sigmoid activation function.
     """
+
+    # Initialize a Sequential model
     model = Sequential()
+
+    # Add the input layer with 64 neurons, ReLU activation, and L2 regularization
     model.add(Dense(64, input_dim=input_dim, activation='relu', kernel_regularizer=l2(0.01)))
-    model.add(BatchNormalization())  # Add Batch Normalization layer
+
+    # Add a Batch Normalization layer to normalize the activations of the previous layer
+    model.add(BatchNormalization())
+
+    # Add a Dropout layer with a rate of 0.5 to prevent overfitting
     model.add(Dropout(0.5))
+
+    # Add a hidden layer with 32 neurons, ReLU activation, and L2 regularization
     model.add(Dense(32, activation='relu', kernel_regularizer=l2(0.01)))
-    model.add(BatchNormalization())  # Add Batch Normalization layer
+
+    # Add another Batch Normalization layer
+    model.add(BatchNormalization())
+
+    # Add another Dropout layer with a rate of 0.5
     model.add(Dropout(0.5))
+
+    # Add the output layer with 1 neuron and a sigmoid activation function for binary classification
     model.add(Dense(1, activation='sigmoid'))
 
+    # Return the constructed model
     return model
 
 
