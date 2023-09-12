@@ -42,3 +42,7 @@ This script can be used as a starting point for any binary classification task. 
 - Determining whether a transaction is fraudulent or not
 
 By customizing the architecture of the neural network and the parameters used during training, you can adapt this script to a wide range of datasets and tasks.
+
+# Notes
+- All binary classification uses supervised learning.
+- Supervised learning depends on labeled data.
